@@ -110,8 +110,8 @@ def autorefresh():
 getnodes()
 getvms()
 
-# for vm in vms:
-#     print(vars(vm))
+for vm in vms:
+    print(vars(vm))
 
 while True:
     print(f"Listening for magic packets on port {wol_port}")
