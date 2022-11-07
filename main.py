@@ -2,10 +2,11 @@ import sys
 from os import system
 import socket
 from proxmoxer import ProxmoxAPI
-from config import pm_user, pm_token_name, pm_token, pm_nodes, wol_port
+import config
+# from config import pm_user, pm_token_name, pm_token, pm_nodes, wol_port
 
 def proxmoxer_connection(node):
-    connection = ProxmoxAPI(node.ip, user=pm_user, token_name=pm_token_name, token_value=pm_token, verify_ssl=False)
+    connection = ProxmoxAPI(node.ip, user=config.pm_user, token_name=config.pm_token_name, token_value=config.pm_token, verify_ssl=False)
     return connection
 
 class Node:
@@ -45,11 +46,11 @@ def checkvmstatus(vm):
 def getnodes():
     global nodes
     nodes = {}
-    for node in pm_nodes:
-        if checknodestatus(pm_nodes[node]["ip"]) == "stopped":
+    for node in config.pm_nodes:
+        if checknodestatus(config.pm_nodes[node]["ip"]) == "stopped":
             pass
         else:
-            nodes[node]=Node(pm_nodes[node]["ip"], checknodestatus(pm_nodes[node]["ip"]))
+            nodes[node]=Node(config.pm_nodes[node]["ip"], checknodestatus(config.pm_nodes[node]["ip"]))
 
 def getvms():
     global vms
@@ -100,8 +101,8 @@ def refresh():
     getvms()
 
 while True:
-    print(f"Listening for magic packets on port {wol_port}")
-    mac = wol_listener(wol_port)
+    print(f"Listening for magic packets on port {config.wol_port}")
+    mac = wol_listener(config.wol_port)
     print(f"Heard {mac}")
     refresh()
     for vm in vms:

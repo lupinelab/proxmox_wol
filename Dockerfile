@@ -1,11 +1,11 @@
-FROM ubuntu
+FROM python:3
 
 RUN apt update && apt install -y iputils-ping
 
-COPY ./bin/proxmox_wol ./
+COPY proxmox_wol.py requirements.txt ./
 
-RUN chmod +x ./proxmox_wol
+RUN pip install --no-cache-dir -r requirements.txt
 
-ENTRYPOINT [ "./proxmox_wol" ]
+ENTRYPOINT [ "python ./proxmox_wol.py" ]
 
 STOPSIGNAL SIGINT
