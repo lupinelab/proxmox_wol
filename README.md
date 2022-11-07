@@ -7,7 +7,7 @@ A containerized utility enabling a magic packet sent to the broadcast address of
 - Create a 'Role' in proxmox called 'proxmox_wol' and give it the following privileges: VM.Audit, VM.PowerMgmt
 - Create a 'User Permission' (Permissions) at both '/nodes' and '/vms' for 'proxmox_wol@pam' and assign the role created above, set Propagate to 'true'.
 - Create an API Token for the promox_wol user, set Token ID to 'proxmox_wol', disable 'Privilege Separation'. Note down the API token somewhere.
-- Create a config.py with values appropriate for your setup (you will be passing this into you docker container as a volume so locate it accordingly):
+- Create a config.py with values appropriate for your setup (you will be passing this into your docker container as a volume so locate it accordingly):
   ```
   pm_user = "proxmox_wol@pam"
   pm_token_name = "proxmox_wol"
@@ -39,4 +39,4 @@ A containerized utility enabling a magic packet sent to the broadcast address of
   ```
 # Notes:
   - The container must have the network_mode set to 'host' as magic packets are not forwarded when using the default bridged network driver
-  - The container (and therefore docker host) must be in the same VLAN that you are sending magic packets from, although I'm sure it is possible to forward magic packets across VLAN through a variety of methods it's probably more convenient to setup and lxc container in the appropriate VLAN and have it run the container.
+  - The container (and therefore docker host) must be in the same VLAN that you are sending magic packets from, although I'm sure it is possible to forward magic packets across VLANs through a variety of methods it's probably more convenient to setup an LCX container in the appropriate VLAN and have it run the container.
