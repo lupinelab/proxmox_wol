@@ -6,6 +6,6 @@ COPY ./bin/proxmox_wol ./
 
 RUN chmod +x ./proxmox_wol
 
-CMD [ "./proxmox_wol" ]
+ENTRYPOINT [ "./proxmox_wol" ]
 
 STOPSIGNAL SIGINT
