@@ -2,10 +2,10 @@ import sys
 from os import system
 import socket
 from proxmoxer import ProxmoxAPI
-from config.config import pm_token, pm_nodes, wol_port
+from config import pm_user, pm_token_name, pm_token, pm_nodes, wol_port
 
 def proxmoxer_connection(node):
-    connection = ProxmoxAPI(node.ip, user="vmupdown@pam", token_name="vmupdown", token_value=pm_token, verify_ssl=False)
+    connection = ProxmoxAPI(node.ip, user=pm_user, token_name=pm_token_name, token_value=pm_token, verify_ssl=False)
     return connection
 
 class Node:
