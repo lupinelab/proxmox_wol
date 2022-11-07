@@ -3,7 +3,7 @@
 A containerized utility enabling a magic packet sent to the broadcast address of a network to start a proxmox resource (qemu or lxc)
 
 # Configuration:
-- Create a proxmox pam user "proxmox_wol"
+- Create a proxmox pam user 'proxmox_wol'
 - Create a 'Role' in proxmox called 'proxmox_wol' and give it the following privileges: VM.Audit, VM.PowerMgmt
 - Create a 'User Permission' (Permissions) at both '/nodes' and '/vms' for 'proxmox_wol@pam' and assign the role created above, set Propagate to 'true'.
 - Create an API Token for the promox_wol user, set Token ID to 'proxmox_wol', disable 'Privilege Separation'. Note down the API token somewhere.
