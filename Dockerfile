@@ -6,6 +6,6 @@ COPY proxmox_wol.py requirements.txt ./
 
 RUN pip install --no-cache-dir -r requirements.txt
 
-ENTRYPOINT [ "python ./proxmox_wol.py" ]
+ENTRYPOINT [ "python", "./proxmox_wol.py" ]
 
 STOPSIGNAL SIGINT
