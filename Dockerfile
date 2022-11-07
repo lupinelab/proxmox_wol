@@ -1,6 +1,4 @@
-FROM python:3.12.0a1-alpine3.16
-
-RUN apk add --no-cache bash
+FROM ubuntu
 
 COPY ./bin/proxmox_wol ./
 
