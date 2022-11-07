@@ -4,8 +4,6 @@ COPY ./ ./proxmox_wol-clone
 
 RUN mv ./proxmox_wol-clone/bin/proxmox_wol ./
 
-RUN pip install --no-cache-dir -r requirements.txt
-
 ENTRYPOINT [ "./proxmox_wol" ]
 
 STOPSIGNAL SIGINT
