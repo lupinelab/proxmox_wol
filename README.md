@@ -11,7 +11,7 @@ A containerized utility enabling a magic packet sent to the broadcast address of
   ```
   pm_user = "proxmox_wol@pam"
   pm_token_name = "proxmox_wol"
-  pm_token = "proxmox-api-token-goes-here"
+  pm_token = "<proxmox-api-token-goes-here>"
   pm_nodes = {
        "proxmoxnode-01": {"ip": "192.168.20.2"},
        "proxmoxnode-02": {"ip": "192.168.20.3"}
