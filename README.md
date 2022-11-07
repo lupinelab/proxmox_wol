@@ -33,6 +33,10 @@ A containerized utility enabling a magic packet sent to the broadcast address of
         restart: unless-stopped
         image: lupinelab/proxmox_wol
   ```
+  To start the container: 
+  ```
+  docker-compose up -d
+  ```
   # Notes:
   - The container must have the network_mode set to 'host' as magic packets are not forwarded when using the default bridged network driver
   - The container (and therefore docker host) must be in the same VLAN that you are sending magic packets from, although I'm sure it is possible to forward magic packets across VLAN through a variety of methods it's probably more convenient to setup and lxc container in the appropriate VLAN and have it run the container.
