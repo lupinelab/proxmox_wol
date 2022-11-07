@@ -45,7 +45,7 @@ def checkvmstatus(vm):
         status = proxmoxer_connection(nodes[vm.node]).nodes(vm.node).lxc(vm.vmid).status.current.get()
     return status["status"]
 
-def get_nodes():
+def getnodes():
     global nodes
     nodes = {}
     for node in pm_nodes:
