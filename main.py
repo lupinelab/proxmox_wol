@@ -1,9 +1,7 @@
 import sys
 from os import system
-from time import sleep
 import socket
 from proxmoxer import ProxmoxAPI
-from threading import Thread
 from config.config import pm_token, pm_nodes, wol_port
 
 def proxmoxer_connection(node):
@@ -97,27 +95,15 @@ def wol_listener(port):
             mac = ':'.join(raw_mac[i:i+2] for i in range(0, len(raw_mac), 2))
             return mac
 
-def autorefresh():
-    # while True:
-    #     sleep(60)
-        getnodes()
-        getvms()
-
-# thread = Thread(target=autorefresh, args=())
-# thread.daemon = True
-# thread.start()
-
-getnodes()
-getvms()
-
-for vm in vms:
-    print(vars(vm))
+def refresh():
+    getnodes()
+    getvms()
 
 while True:
     print(f"Listening for magic packets on port {wol_port}")
     mac = wol_listener(wol_port)
     print(f"Heard {mac}")
-    autorefresh()
+    refresh()
     for vm in vms:
         if mac == vm.mac:
             print(f"Resource {vm.name} is currently {vm.status}")
