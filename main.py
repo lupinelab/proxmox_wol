@@ -18,15 +18,14 @@ class Node:
 class VM:
     def __init__(self, vm, name, node, vmtype, mac, status = ""):
         self.vmid = vm
+        self.name = name
         self.node = node
         self.type = vmtype
         self.mac = mac
         self.status = status
 
     def start(self):
-        if self.status != pause or stopped:
-            return
-        elif self.type == "qemu":
+        if self.type == "qemu":
             proxmoxer_connection(nodes[self.node]).nodes(self.node).qemu(self.vmid).status.start.post()
         elif self.type == "lxc":
             proxmoxer_connection(nodes[self.node]).nodes(self.node).lxc(self.vmid).status.start.post()
@@ -92,7 +91,6 @@ def wol_listener(port):
         except PermissionError:
             print("Please run as elevated user")
             sys.exit(2)
-        print(f"Listening for Wake-on-LAN packets on port {port}:")
         while True:
             magic_packet = s.recv(1024).hex()
             raw_mac = magic_packet.strip("f")[0:12].upper()
@@ -109,7 +107,7 @@ thread = Thread(target=autorefresh, args=())
 thread.daemon = True
 thread.start()
 
-get_nodes()
+getnodes()
 getvms()
 
 # for vm in vms:
