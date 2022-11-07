@@ -1,6 +1,6 @@
 # proxmox_wol
 
-A dcontainerized utility enabling a magic packet sent to the broadcast address of a network to start a proxmox resource (qemu or lxc)
+A containerized utility enabling a magic packet sent to the broadcast address of a network to start a proxmox resource (qemu or lxc)
 
 # Configuration:
 - Create a proxmox pam user "proxmox_wol"
