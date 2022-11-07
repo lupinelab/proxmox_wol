@@ -103,9 +103,9 @@ def autorefresh():
         getnodes()
         getvms()
 
-thread = Thread(target=autorefresh, args=())
-thread.daemon = True
-thread.start()
+# thread = Thread(target=autorefresh, args=())
+# thread.daemon = True
+# thread.start()
 
 getnodes()
 getvms()
@@ -117,6 +117,7 @@ while True:
     print(f"Listening for magic packets on port {wol_port}")
     mac = wol_listener(wol_port)
     print(f"Heard {mac}")
+    autorefresh()
     for vm in vms:
         if mac == vm.mac:
             print(f"Resource {vm.name} is currently {vm.status}")
