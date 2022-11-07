@@ -98,8 +98,8 @@ def wol_listener(port):
             return mac
 
 def autorefresh():
-    while True:
-        sleep(60)
+    # while True:
+    #     sleep(60)
         getnodes()
         getvms()
 
