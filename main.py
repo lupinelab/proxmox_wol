@@ -114,10 +114,14 @@ getvms()
 #     print(vars(vm))
 
 while True:
+    print(f"Listening for magic packets on port {wol_port}")
     mac = wol_listener(wol_port)
+    print(f"Heard {mac}")
     for vm in vms:
         if mac == vm.mac:
+            print(f"Resource {vm.name} is currently {vm.status}")
             if vm.status != "running":
                 vm.start()
+                print(f"Starting {vm.name}")
         else:
             pass
