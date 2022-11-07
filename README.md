@@ -33,7 +33,7 @@ A containerized utility enabling a magic packet sent to the broadcast address of
         restart: unless-stopped
         image: lupinelab/proxmox_wol
   ```
-  To start the container: 
+  Start the container: 
   ```
   docker-compose up -d
   ```
