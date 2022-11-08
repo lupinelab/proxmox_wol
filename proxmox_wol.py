@@ -14,12 +14,12 @@ class Node:
         self.status = status
 
 class VM:
-    def __init__(self, vm, name, node, vmtype, mac, status = ""):
+    def __init__(self, vm, name, node, vmtype, macs, status = ""):
         self.vmid = vm
         self.name = name
         self.node = node
         self.type = vmtype
-        self.mac = mac
+        self.macs = macs
         self.status = status
 
     def start(self):
@@ -63,20 +63,21 @@ def getvms():
         vmidpernodedict[vm["vmid"]]["type"] = vm["type"]
     for vmid in vmidpernodedict:
         if vmidpernodedict[vmid]["node"] in nodes:
+            macs = []
             if vmidpernodedict[vmid]["type"] == "qemu":
                 config = proxmoxer_connection(nodes[vmidpernodedict[vmid]["node"]]).nodes(vmidpernodedict[vmid]["node"]).qemu(vmid).config.get()
                 for line in config:
                     if line.startswith("net"):
-                        mac = config.get(line).split(",")[0].split("=")[1]
-                loadvms.append(VM(str(vmid), config.get("name"), vmidpernodedict[vmid]["node"], vmidpernodedict[vmid]["type"], mac))
+                        macs.append(config.get(line).split(",")[0].split("=")[1])
+                loadvms.append(VM(str(vmid), config.get("name"), vmidpernodedict[vmid]["node"], vmidpernodedict[vmid]["type"], macs))
             if vmidpernodedict[vmid]["type"] == "lxc":
                 config = proxmoxer_connection(nodes[vmidpernodedict[vmid]["node"]]).nodes(vmidpernodedict[vmid]["node"]).lxc(vmid).config.get()
                 for line in config:
                     if line.startswith("net"):
                         for i in config.get(line).split(","):
                             if i.startswith("hwaddr"):
-                                mac = i.split("=")[1]
-                loadvms.append(VM(str(vmid), config.get("hostname"), vmidpernodedict[vmid]["node"], vmidpernodedict[vmid]["type"], mac))
+                                macs.append(i.split("=")[1])
+                loadvms.append(VM(str(vmid), config.get("hostname"), vmidpernodedict[vmid]["node"], vmidpernodedict[vmid]["type"], macs))
     for vm in loadvms:
         vm.status = checkvmstatus(vm)
     vms = loadvms
@@ -101,11 +102,11 @@ def refresh():
 
 while True:
     print(f"Listening for magic packets on port {wol_port}")
-    mac = wol_listener(wol_port)
-    print(f"Heard {mac}")
+    receivedmac = wol_listener(wol_port)
+    print(f"Heard {receivedmac}")
     refresh()
     for vm in vms:
-        if mac == vm.mac:
+        if receivedmac in vm.macs:
             print(f"Resource {vm.name} is currently {vm.status}")
             if vm.status != "running":
                 vm.start()
