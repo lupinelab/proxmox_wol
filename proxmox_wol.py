@@ -104,17 +104,16 @@ def refresh():
 while True:
     print(f"Listening for magic packets on port {wol_port}:")
     receivedmac = wol_listener(wol_port)
-    if re.search("^([0-9A-Fa-f]{2}[:]){5}([0-9A-Fa-f]{2})$", receivedmac) != None:
+    if re.search("^([0-9A-Fa-f]{2}[:]){5}([0-9A-Fa-f]{2})$", receivedmac) == None:
+        print("Heard an invalid mac address")
+    else:
         print(f"Heard {receivedmac}")
         refresh()
         for vm in vms:
             if receivedmac in vm.macs:
+                vmtostart = vm
                 print(f"Resource {vm.name} is currently {vm.status}")
                 if vm.status != "running":
                     vm.start()
                     print(f"Starting {vm.name}")
-            else:
-                print("No match")
-                pass
-    else:
-        print("Heard an invalid mac address")
+                    break
