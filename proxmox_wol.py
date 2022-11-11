@@ -1,4 +1,5 @@
 import sys
+import re
 from os import system
 import socket
 from proxmoxer import ProxmoxAPI
@@ -101,15 +102,19 @@ def refresh():
     getvms()
 
 while True:
-    print(f"Listening for magic packets on port {wol_port}")
+    print(f"Listening for magic packets on port {wol_port}:")
     receivedmac = wol_listener(wol_port)
-    print(f"Heard {receivedmac}")
-    refresh()
-    for vm in vms:
-        if receivedmac in vm.macs:
-            print(f"Resource {vm.name} is currently {vm.status}")
-            if vm.status != "running":
-                vm.start()
-                print(f"Starting {vm.name}")
-        else:
-            pass
+    if re.search("^([0-9A-Fa-f]{2}[:]){5}([0-9A-Fa-f]{2})$", receivedmac) != None:
+        print(f"Heard {receivedmac}")
+        refresh()
+        for vm in vms:
+            if receivedmac in vm.macs:
+                print(f"Resource {vm.name} is currently {vm.status}")
+                if vm.status != "running":
+                    vm.start()
+                    print(f"Starting {vm.name}")
+            else:
+                print("No match")
+                pass
+    else:
+        print("Heard an invalid mac address")
