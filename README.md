@@ -16,7 +16,7 @@ A containerized utility enabling a magic packet sent to the broadcast address of
        "proxmoxnode-01": {"ip": "192.168.20.2"},
        "proxmoxnode-02": {"ip": "192.168.20.3"}
   }
-  wol_port = 7   ## this could be 7 or 9 depending on the wakeonlan client you are using to send magic packets
+  wol_port = 9   ## this could be 7 or 9 depending on the wakeonlan client you are using to send magic packets
   ```
   Example docker compose file:
   

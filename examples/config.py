@@ -5,4 +5,4 @@ pm_nodes = {
         "proxmox-01": {"ip": "192.168.20.101"},
         "proxmox-02": {"ip": "192.168.20.102"}
         }
-wol_port = 7
+wol_port = 9
