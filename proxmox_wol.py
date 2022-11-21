@@ -93,7 +93,7 @@ def wol_listener(port):
             sys.exit(2)
         while True:
             magic_packet = s.recv(1024).hex()
-            raw_mac = magic_packet.strip("f")[0:12].upper()
+            raw_mac = magic_packet[-12:].upper()
             mac = ':'.join(raw_mac[i:i+2] for i in range(0, len(raw_mac), 2))
             return mac
 
@@ -111,7 +111,6 @@ while True:
         refresh()
         for vm in vms:
             if receivedmac in vm.macs:
-                vmtostart = vm
                 print(f"Resource {vm.name} is currently {vm.status}")
                 if vm.status != "running":
                     vm.start()
