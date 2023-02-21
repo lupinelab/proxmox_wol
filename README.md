@@ -2,7 +2,7 @@
 
 A containerized utility enabling a magic packet sent to the broadcast address of a network to start a proxmox resource (qemu or lxc)
 
-# Configuration:
+## Configuration:
 - Create a proxmox pam user 'proxmox_wol'
 - Create a 'Role' in proxmox called 'proxmox_wol' and give it the following privileges: VM.Audit, VM.PowerMgmt
 - Create a 'User Permission' (Permissions) at both '/nodes' and '/vms' for 'proxmox_wol@pam' and assign the role created above, set Propagate to 'true'.
@@ -34,6 +34,6 @@ A containerized utility enabling a magic packet sent to the broadcast address of
   ```
   docker-compose up -d
   ```
-# Notes:
+## Notes:
   - The container must have the network_mode set to 'host' as magic packets are not forwarded when using the default bridged network driver
   - The container (and therefore docker host) must be in the same VLAN that you are sending magic packets from, although I'm sure it is possible to forward magic packets across VLANs through a variety of methods it's probably more convenient to setup an LCX container in the appropriate VLAN and have it run the container.
