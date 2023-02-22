@@ -1,6 +1,6 @@
-FROM python:3
+FROM python:3-alpine
 
-RUN apt update && apt install -y iputils-ping
+RUN apk update && apk add iputils
 
 COPY proxmox_wol.py requirements.txt ./
 
