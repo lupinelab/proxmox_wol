@@ -30,7 +30,7 @@ class VM:
             proxmoxer_connection(nodes[self.node]).nodes(self.node).lxc(self.vmid).status.start.post()
 
 def checknodestatus(ip):
-    ping = "ping " + ip + " -c 1 -W 2 >/dev/null"
+    ping = f"ping -c 1 -W 2 {ip} > /dev/null"
     if system(ping) == 0:
         return "started"
     else:
