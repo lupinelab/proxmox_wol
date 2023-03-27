@@ -23,7 +23,7 @@ A containerized utility enabling a magic packet sent to the broadcast address of
   ```version: '3.3'
   services:
     proxmox_wol:
-        container_name: proxmox_wol`
+        container_name: proxmox_wol
         volumes:
             - '/path/to/config.py:/config.py'
         network_mode: host
